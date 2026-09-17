@@ -74,6 +74,21 @@ class BoxillaClient:
         response = self.request("DELETE", path, **kwargs)
         return response.json() if response.content else None
 
+    def list_kvm_connections(self, **params: Any) -> Any:
+        return self.get("/bxa-api/connections/kvm", params=params or None)
+
+    def activate_kvm_connection(self, payload: Optional[dict[str, Any]] = None) -> Any:
+        return self.post("/bxa-api/connections/kvm/active", json=payload)
+
+    def list_connection_presets(self, **params: Any) -> Any:
+        return self.get("/bxa-api/connections/presets", params=params or None)
+
+    def activate_connection_preset(self, payload: Optional[dict[str, Any]] = None) -> Any:
+        return self.post("/bxa-api/connections/presets/activate", json=payload)
+
+    def list_kvm_devices(self, **params: Any) -> Any:
+        return self.get("/bxa-api/devices/kvm", params=params or None)
+
     def close(self) -> None:
         self._client.close()
 
@@ -126,6 +141,21 @@ class AsyncBoxillaClient:
     async def delete(self, path: str, **kwargs: Any) -> Any:
         response = await self.request("DELETE", path, **kwargs)
         return response.json() if response.content else None
+
+    async def list_kvm_connections(self, **params: Any) -> Any:
+        return await self.get("/bxa-api/connections/kvm", params=params or None)
+
+    async def activate_kvm_connection(self, payload: Optional[dict[str, Any]] = None) -> Any:
+        return await self.post("/bxa-api/connections/kvm/active", json=payload)
+
+    async def list_connection_presets(self, **params: Any) -> Any:
+        return await self.get("/bxa-api/connections/presets", params=params or None)
+
+    async def activate_connection_preset(self, payload: Optional[dict[str, Any]] = None) -> Any:
+        return await self.post("/bxa-api/connections/presets/activate", json=payload)
+
+    async def list_kvm_devices(self, **params: Any) -> Any:
+        return await self.get("/bxa-api/devices/kvm", params=params or None)
 
     async def aclose(self) -> None:
         await self._client.aclose()
